@@ -71,7 +71,8 @@ public class CommandLineDemo {
         opt.addOption("d","debug",false,"if required debug").
                 addOption("a","alias",true,"if required alias").
                 addOption(OptionBuilder.withLongOpt("size").withDescription("size required").withValueSeparator('=').withArgName("size").create()).
-                addOption("h","help",false,"help me");
+                addOption("h","help",false,"help me").
+                addOption(OptionBuilder.withArgName("file").hasArg().create("O"));
 
 
         String helpFormate = "hiboot [-d/--debug] [-a/--alias] [--size] [-h/--help]";
@@ -96,16 +97,20 @@ public class CommandLineDemo {
         }
 
         if (commandLine.hasOption("size")){
-            System.out.println("size" + commandLine.getArgs()[0]);
+            System.out.println("size" + commandLine.getOptionValue("size"));
+        }
+
+        if (commandLine.hasOption("O")){
+            System.out.println("O" );
         }
 
 
     }
 
     public static void main(String[] args) {
-//        String [] testStr = {"gmkdir","-O","hello"};
+//        String [] testStr = {"gmkdir","--block-size=100","hello"};
 //        TESTOP(testStr);
-        String [] testStr = {"hiboot","a","--debug","--size","123","name"};
+        String [] testStr = {"hiboot","-a","hello","--debug","--size","123","-O","filename"};
 //        hiboot [d/debug] [a/alias <aliasName>] [size=123] [h/help]
         myfirstCommandLine(testStr);
     }
