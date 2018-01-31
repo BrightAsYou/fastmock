@@ -4,8 +4,7 @@ package org.brightasu.thread;
  * Copyright (c) 2004-2016 All Rights Reserved.
  */
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 /**
  * @author darbean
@@ -36,14 +35,18 @@ public abstract class FutureTest {
                 return as;
             }
         };
-        FutureTask futureTask = new FutureTask(callable);
-        FutureTask futureTask1 = new FutureTask(callable1);
-        new Thread(futureTask).start();
-        new Thread(futureTask1).start();
-        System.out.println(futureTask1.get());
-        System.out.println(futureTask.get());
+//        FutureTask futureTask = new FutureTask(callable);
+//        FutureTask futureTask1 = new FutureTask(callable1);
+//        new Thread(futureTask).start();
+//        new Thread(futureTask1).start();
+//        System.out.println(futureTask1.get());
+//        System.out.println(futureTask.get());
 
-
+        Executor executor = Executors.newCachedThreadPool();
+//        executor.execute(futureTask1);
+        CompletionService completionService = new ExecutorCompletionService(executor);
+         completionService.submit(callable);
+        System.out.println(completionService.take().get());
     }
 }
 
